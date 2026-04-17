@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mihai.IA</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Detector de Sentimientos IA</h1>
+        <p>Escribe algo en inglés y la IA dirá si es positivo o negativo:</p>
+        <input type="text" id="userInput" placeholder="Ej: I love this project!">
+        <button onclick="analizarSentimiento()">Analizar</button>
+        <div id="resultado"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
