@@ -1,12 +1,148 @@
-body { font-family: 'Segoe UI', sans-serif; background: #212121; margin: 0; display: flex; justify-content: center; height: 100vh; }
-.chat-container { width: 100%; max-width: 700px; display: flex; flex-direction: column; background: #2f2f2f; }
-.header { padding: 15px; background: #171717; text-align: center; color: white; border-bottom: 1px solid #444; }
-#status { font-size: 10px; color: #10a37f; }
-#chat-box { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px; color: white; }
-.message { padding: 12px; border-radius: 10px; max-width: 85%; line-height: 1.5; }
-.user { background: #40414f; align-self: flex-end; }
-.ai { background: transparent; align-self: flex-start; border: 1px solid #555; }
-.input-area { padding: 20px; background: #2f2f2f; display: flex; gap: 10px; }
-textarea { flex: 1; background: #40414f; border: 1px solid #555; color: white; padding: 10px; border-radius: 5px; resize: none; outline: none; }
-button { background: #10a37f; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
-button:disabled { background: #555; cursor: not-allowed; }
+/* Reset general para que no haya márgenes raros */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: #212121; /* Fondo oscuro tipo ChatGPT */
+    color: #ececf1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Contenedor principal del Chat */
+.chat-container {
+    width: 100%;
+    max-width: 900px;
+    height: 90vh;
+    background-color: #2f2f2f;
+    display: flex;
+    flex-direction: column;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border: 1px solid #444;
+}
+
+/* Encabezado con el estado de carga */
+.header {
+    padding: 20px;
+    background-color: #171717;
+    border-bottom: 1px solid #444;
+    text-align: center;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.header h2 {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+#status {
+    font-size: 0.85rem;
+    color: #10a37f; /* Verde esmeralda */
+    font-style: italic;
+}
+
+/* Caja donde aparecen los mensajes */
+#chat-box {
+    flex: 1;
+    overflow-y: auto;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    scroll-behavior: smooth;
+}
+
+/* Estilo de las burbujas de mensaje */
+.message {
+    padding: 15px 20px;
+    border-radius: 15px;
+    max-width: 85%;
+    line-height: 1.6;
+    font-size: 1rem;
+    word-wrap: break-word;
+}
+
+.user {
+    background-color: #40414f;
+    align-self: flex-end;
+    border-bottom-right-radius: 2px;
+    color: white;
+}
+
+.ai {
+    background-color: #444654;
+    align-self: flex-start;
+    border-bottom-left-radius: 2px;
+    color: #d1d1d1;
+    border: 1px solid #555;
+}
+
+/* Área de entrada de texto */
+.input-area {
+    padding: 25px;
+    background-color: #2f2f2f;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
+
+textarea {
+    flex: 1;
+    background-color: #40414f;
+    color: white;
+    border: 1px solid #565869;
+    padding: 12px 15px;
+    border-radius: 8px;
+    resize: none;
+    outline: none;
+    font-size: 1rem;
+    font-family: inherit;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+textarea::placeholder {
+    color: #8e8ea0;
+}
+
+/* Botón de Enviar */
+button {
+    background-color: #10a37f;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.1s active;
+}
+
+button:hover:not(:disabled) {
+    background-color: #1a7f64;
+}
+
+button:disabled {
+    background-color: #555;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Personalización de la barra de scroll */
+#chat-box::-webkit-scrollbar {
+    width: 6px;
+}
+
+#chat-box::-webkit-scrollbar-thumb {
+    background-color: #565869;
+    border-radius: 10px;
+}
