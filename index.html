@@ -3,18 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mihai.IA</title>
+    <title>IA Inteligente Total - Sin Key</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
 </head>
 <body>
-    <div class="container">
-        <h1>Detector de Sentimientos IA</h1>
-        <p>Escribe algo en inglés y la IA dirá si es positivo o negativo:</p>
-        <input type="text" id="userInput" placeholder="Ej: I love this project!">
-        <button onclick="analizarSentimiento()">Analizar</button>
-        <div id="resultado"></div>
+    <div class="chat-container">
+        <div class="header">
+            <h2>IA Local Potente</h2>
+            <div id="status">Cargando motor de IA... (esto puede tardar)</div>
+        </div>
+        <div id="chat-box"></div>
+        <div class="input-area">
+            <textarea id="userInput" placeholder="Pregúntame lo que quieras..." rows="1"></textarea>
+            <button id="sendBtn" disabled>Enviar</button>
+        </div>
     </div>
-    <script src="script.js"></script>
+
+    <script type="module">
+        import * as webllm from "https://esm.run/@mlc-ai/web-llm";
+
+        const status = document.getElementById("status");
+        const chatBox = document.getElementById("chat-box");
+        const userInput = document.getElementById("userInput");
+        const sendBtn = document.getElementById("sendBtn");
+
+        // Configuración del modelo (usamos uno ligero para que cargue rápido)
+        const selectedModel = "Llama-3-8B-Instruct-q4f16_1-MLC";
+
+        const engine = new webllm.CreateMLCEngine(
+            selectedModel,
+            { initProgressCallback: (report) => status.innerText = report.text }
+        );
+
+        async function main() {
+            const engineInstance = await engine;
+            status.innerText = "IA Lista. ¡Pregunta lo que sea!";
+            sendBtn.disabled = false;
+
+            sendBtn.onclick = async () => {
+                const text = userInput.value.trim();
+                if (!text) return;
+
+                appendMessage("user", text);
+                userInput.value = "";
+                
+                const aiMsgDiv = appendMessage("ai", "Escribiendo...");
+                
+                const messages = [{ role: "user", content: text }];
+                const reply = await engineInstance.chat.completions.create({ messages });
+                
+                aiMsgDiv.innerText = reply.choices[0].message.content;
+                chatBox.scrollTop = chatBox.scrollHeight;
+            };
+        }
+
+        function appendMessage(role, text) {
+            const div = document.createElement("div");
+            div.className = `message ${role}`;
+            div.innerText = text;
+            chatBox.appendChild(div);
+            chatBox.scrollTop = chatBox.scrollHeight;
+            return div;
+        }
+
+        main();
+    </script>
 </body>
 </html>
